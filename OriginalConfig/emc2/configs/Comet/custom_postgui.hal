@@ -1,0 +1,54 @@
+# Include your customized HAL commands here
+# The commands in this file are run after the AXIS GUI (including PyVCP panel)
+# starts
+# This file will not be overwritten when you run stepconf again
+
+
+setp halui.jog-speed 10
+
+addf or2.3 servo-thread
+addf or2.4 servo-thread
+addf mux4.0 servo-thread
+#addf not.1 servo-thread
+
+#net reverse_button not.1.in <= input.button.4
+#net estop-ext2 <= not.1.out  
+#net estop-ext2 => iocontrol.0.emc-enable-in
+
+setp mux4.0.in0 0
+setp mux4.0.in1 25
+setp mux4.0.in2 100
+setp mux4.0.in3 200
+
+net remote-speed-slow or2.3.in0 input.0.btn-trigger
+net remote-speed-medium or2.4.in0 input.0.btn-thumb
+net remote-speed-fast or2.3.in1 or2.4.in1 input.0.btn-thumb2
+
+net joy-speed-1 mux4.0.sel0 <= or2.3.out
+net joy-speed-2 mux4.0.sel1 <= or2.4.out
+net joy-speed-final halui.jog-speed <= mux4.0.out
+
+net joy-x-jog halui.jog.0.analog <= input.0.abs-x-position
+#net joy-y-jog halui.jog.1.analog <= input.0.abs-y-position
+#net joy-z-jog halui.jog.2.analog <= input.0.abs-rz-position
+
+loadrt sum2 count=2
+addf sum2.0 servo-thread
+addf sum2.1 servo-thread
+
+setp sum2.0.gain0 -1
+net reverse-y sum2.0.in0 <= input.0.abs-y-position
+net joy-y-jog halui.jog.1.analog <= sum2.0.out
+
+setp sum2.1.gain0 -1
+net reverse-z sum2.1.in0 <= input.0.abs-rz-position
+net joy-z-jog halui.jog.2.analog <= sum2.1.out
+
+#net button-home-all <= input.button.8
+#net button-home-all => halui.joint.2.home
+
+#net button-abort <= input.button.4
+#net button-abort => halui.abort
+
+
+

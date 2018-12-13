@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- PROBOTIX PyVCP sidebar -->
+<pyvcp>
+	<!-- SET_ORIGIN -->
+	<labelframe text="Set Axis Origins">
+		<vbox>
+			<bd>10</bd>
+			<button>
+				<halpin>"touch-xy"</halpin>
+				<text>"Touch-off X/Y"</text>
+				<font>('fixed',10)</font>
+			</button>
+			<button>
+				<halpin>"touch-z"</halpin>
+				<text>"Touch-off Z"</text>
+				<font>('fixed',10)</font>
+			</button>
+		</vbox>
+	</labelframe>
+	<labelframe text="Machine">
+		<vbox>
+			<bd>10</bd>
+			<button>
+				<halpin>"btf"</halpin>
+				<text>"Bring To Front"</text>
+				<font>('fixed',10)</font>
+			</button>
+			<button>
+				<halpin>"par"</halpin>
+				<text>"Park At Rear"</text>
+				<font>('fixed',10)</font>
+			</button>
+			<button>
+				<halpin>"rthome"</halpin>
+				<text>"Return To Home"</text>
+				<font>('fixed',10)</font>
+			</button>
+			<button>
+				<halpin>"rtzero"</halpin>
+				<text>"Return To X/Y Origin"</text>
+				<font>('fixed',10)</font>
+			</button>
+		</vbox>
+	</labelframe>
+	<vbox>
+		<bd>6</bd>
+		<button>
+			<halpin>"rsc_reset"</halpin>
+			<text>"G-code Reset"</text>
+			<font>('fixed',10)</font>
+		</button>
+		<button>
+			<halpin>"reset-offset"</halpin>
+			<text>"Reset Offsets"</text>
+			<font>('fixed',10)</font>
+		</button>
+	</vbox>
+</pyvcp>

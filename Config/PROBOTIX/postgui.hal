@@ -1,0 +1,18 @@
+# PROBOTIX PostGUI file
+
+
+
+
+# HALUI_TOUCH
+net touch-xy pyvcp.touch-xy halui.mdi-command-02
+net touch-z pyvcp.touch-z halui.mdi-command-03
+
+# HALUI_COMMON
+net btf pyvcp.btf halui.mdi-command-04
+net par pyvcp.par halui.mdi-command-05
+net rthome pyvcp.rthome halui.mdi-command-06
+net rtzero pyvcp.rtzero halui.mdi-command-07
+net rsc_reset pyvcp.rsc_reset halui.mdi-command-08
+net reset-offset pyvcp.reset-offset halui.mdi-command-10
+
+
