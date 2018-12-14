@@ -2727,17 +2727,6 @@ def nomodifier(f):
 def kp_wrap(f,g):
 	return nomodifier(f)
 
-# AMH - 2018-12-13 - Custom bindings for NumPad pendant
-# Axis Jog & End (touch off) handled without extra bindings
-root_window.bind("<KP_Delete>", kp_wrap(commands.spindle_forward_toggle, "KeyPress"))
-root_window.bind("<KP_Subtract>", lambda event: jogspeed_continuous())
-root_window.bind("<KP_Add>", lambda event: jogspeed_incremental())
-root_window.bind_class("all", "<KP_Insert>", commands.estop_clicked)
-root_window.bind("<KP_Divide>", commands.task_run)
-root_window.bind("<KP_Multiply>", commands.task_pauseresume)
-# End Custom Bindings for NumPad Pendant
-
-
 root_window.bind("<Escape>", commands.task_stop)
 root_window.bind("l", commands.toggle_override_limits)
 root_window.bind("o", commands.open_file)
