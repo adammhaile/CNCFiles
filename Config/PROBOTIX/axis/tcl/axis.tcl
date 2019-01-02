@@ -1321,24 +1321,31 @@ setup_widget_accel $_tabs_manual.custom [_ Custom:]
 grid $_tabs_manual.custom \
 	-column 0 \
 	-row 9 \
+	-pady 2 \
+	-sticky nw
+
+frame $_tabs_manual.customf
+frame $_tabs_manual.customf.frame0
+
+grid $_tabs_manual.customf \
+	-column 1 \
+	-row 9 \
 	-sticky w
 
-frame $_tabs_manual.custom.frame
-
-grid $_tabs_manual.custom.frame \
+grid $_tabs_manual.customf.frame0 \
 	-column 0 \
 	-row 0 \
 	-columnspan 3 \
 	-sticky w
 
 # XY-touch
-button $_tabs_manual.custom.frame.xytouch \
+button $_tabs_manual.customf.frame0.xytouch \
 	-command xytouch \
 	-padx 2m \
 	-pady 0
-setup_widget_accel $_tabs_manual.custom.frame.xytouch [_ "X/Y-Touch"]
+setup_widget_accel $_tabs_manual.customf.frame0.xytouch [_ "X/Y-Touch"]
 
-grid $_tabs_manual.custom.frame.xytouch \
+grid $_tabs_manual.customf.frame0.xytouch \
 	-column 0 \
 	-row 0 \
 	-ipadx 2 \
@@ -1346,41 +1353,49 @@ grid $_tabs_manual.custom.frame.xytouch \
 	-sticky w
 
 # Z-touch w/ out Puck
-button $_tabs_manual.custom.frame.ztouch \
+button $_tabs_manual.customf.frame0.ztouch \
 	-command ztouch \
 	-padx 2m \
 	-pady 0
-setup_widget_accel $_tabs_manual.custom.frame.ztouch [_ "Z-Touch"]
+setup_widget_accel $_tabs_manual.customf.frame0.ztouch [_ "Z-Touch"]
 
-grid $_tabs_manual.custom.frame.ztouch \
-	-column 1 \
-	-row 0 \
+grid $_tabs_manual.customf.frame0.ztouch \
+	-column 0 \
+	-row 1 \
 	-ipadx 2 \
 	-pady 2 \
 	-sticky w
 
 # Z-touch w/ Puck
-button $_tabs_manual.custom.frame.ztouch_puck \
+button $_tabs_manual.customf.frame0.ztouch_puck \
 	-command ztouch_puck \
 	-padx 2m \
 	-pady 0
-setup_widget_accel $_tabs_manual.custom.frame.ztouch_puck [_ "Z-Touch Puck"]
+setup_widget_accel $_tabs_manual.customf.frame0.ztouch_puck [_ "Z-Touch Puck"]
 
-grid $_tabs_manual.custom.frame.ztouch_puck \
-	-column 2 \
-	-row 0 \
+grid $_tabs_manual.customf.frame0.ztouch_puck \
+	-column 0 \
+	-row 2 \
 	-ipadx 2 \
 	-pady 2 \
 	-sticky w
 
+frame $_tabs_manual.customf.frame1
+
+grid $_tabs_manual.customf.frame1 \
+	-column 0 \
+	-row 1 \
+	-columnspan 3 \
+	-sticky w
+
 # X 0
-button $_tabs_manual.custom.frame.zero_x \
+button $_tabs_manual.customf.frame1.zero_x \
 	-command zero_x \
 	-padx 2m \
 	-pady 0
-setup_widget_accel $_tabs_manual.custom.frame.zero_x [_ "Zero X"]
+setup_widget_accel $_tabs_manual.customf.frame1.zero_x [_ "Zero X"]
 
-grid $_tabs_manual.custom.frame.zero_x \
+grid $_tabs_manual.customf.frame1.zero_x \
 	-column 0 \
 	-row 0 \
 	-ipadx 2 \
@@ -1388,29 +1403,29 @@ grid $_tabs_manual.custom.frame.zero_x \
 	-sticky w
 
 # Y 0
-button $_tabs_manual.custom.frame.zero_y \
+button $_tabs_manual.customf.frame1.zero_y \
 	-command zero_y \
 	-padx 2m \
 	-pady 0
-setup_widget_accel $_tabs_manual.custom.frame.zero_y [_ "Zero Y"]
+setup_widget_accel $_tabs_manual.customf.frame1.zero_y [_ "Zero Y"]
 
-grid $_tabs_manual.custom.frame.zero_y \
-	-column 1 \
-	-row 0 \
+grid $_tabs_manual.customf.frame1.zero_y \
+	-column 0 \
+	-row 1 \
 	-ipadx 2 \
 	-pady 2 \
 	-sticky w
 
 # Z 0
-button $_tabs_manual.custom.frame.zero_z \
+button $_tabs_manual.customf.frame1.zero_z \
 	-command zero_z \
 	-padx 2m \
 	-pady 0
-setup_widget_accel $_tabs_manual.custom.frame.zero_z [_ "Zero Z"]
+setup_widget_accel $_tabs_manual.customf.frame1.zero_z [_ "Zero Z"]
 
-grid $_tabs_manual.custom.frame.zero_z \
-	-column 2 \
-	-row 0 \
+grid $_tabs_manual.customf.frame1.zero_z \
+	-column 0 \
+	-row 2 \
 	-ipadx 2 \
 	-pady 2 \
 	-sticky w
@@ -2121,12 +2136,24 @@ proc update_state {args} {
 			|| $::kinematics_type == $::KINEMATICS_IDENTITY)} {
 		$::_tabs_manual.jogf.zerohome.zero configure -state normal
 		# AMH
-		$::_tabs_manual.custom.frame configure -state normal
+		$::_tabs_manual.customf.frame0.xytouch configure -state normal
+		$::_tabs_manual.customf.frame0.ztouch configure -state normal
+		$::_tabs_manual.customf.frame0.ztouch_puck configure -state normal
+
+		$::_tabs_manual.customf.frame1.zero_x configure -state normal
+		$::_tabs_manual.customf.frame1.zero_y configure -state normal
+		$::_tabs_manual.customf.frame1.zero_z configure -state normal
 		# END AMH
 	} else {
 		$::_tabs_manual.jogf.zerohome.zero configure -state disabled
 		# AMH
-		$::_tabs_manual.custom.frame configure -state disabled
+		$::_tabs_manual.customf.frame0.xytouch configure -state disabled
+		$::_tabs_manual.customf.frame0.ztouch configure -state disabled
+		$::_tabs_manual.customf.frame0.ztouch_puck configure -state disabled
+
+		$::_tabs_manual.customf.frame1.zero_x configure -state disabled
+		$::_tabs_manual.customf.frame1.zero_y configure -state disabled
+		$::_tabs_manual.customf.frame1.zero_z configure -state disabled
 		# END AMH
 	}
 

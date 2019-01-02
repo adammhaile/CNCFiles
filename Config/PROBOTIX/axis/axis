@@ -2460,6 +2460,8 @@ class TclCommands(nf_pbx.TclCommands):
 		global system
 		if not manual_ok(): return
 		if joints_mode(): return
+
+		system = vars.touch_off_system.get()
 		new_axis_value = new_value
 
 		vars.touch_off_system.set(system)
@@ -2491,17 +2493,16 @@ class TclCommands(nf_pbx.TclCommands):
 		reload_file(False)
 
 	def xytouch(event=None):
-		custom_touch(offset_axis='x')
-		custom_touch(offset_axis='y')
+		commands.custom_touch(offset_axis='x')
+		commands.custom_touch(offset_axis='y')
 
 	def ztouch(event=None):
-		custom_touch(offset_axis='z', new_value=height)
+		commands.custom_touch(offset_axis='z')
 
 	def ztouch_puck(event=None):
-		custom_touch(offset_axis='z', new_value=ZPUCK_HEIGHT)
+		commands.custom_touch(offset_axis='z', new_value=ZPUCK_HEIGHT)
 
 	def custom_rapid(event=None, axis='X', new_value=0.0):
-		global system
 		if not manual_ok(): return
 
 		ensure_mode(linuxcnc.MODE_MDI)
@@ -2516,13 +2517,13 @@ class TclCommands(nf_pbx.TclCommands):
 		o.tkRedraw()
 
 	def zero_x(event=None):
-		custom_rapid(axis='X', new_value=0.0)
+		commands.custom_rapid(axis='X', new_value=0.0)
 
 	def zero_y(event=None):
-		custom_rapid(axis='Y', new_value=0.0)
+		commands.custom_rapid(axis='Y', new_value=0.0)
 
 	def zero_z(event=None):
-		custom_rapid(axis='Z', new_value=0.0)
+		commands.custom_rapid(axis='Z', new_value=0.0)
 
 	# END AMH
 
