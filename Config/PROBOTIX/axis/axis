@@ -44,6 +44,9 @@ gettext.install("linuxcnc", localedir=os.path.join(BASE, "share", "locale"), uni
 
 import array, time, atexit, tempfile, shutil, errno, thread, select, re, getopt
 
+#AMH Custom Vars
+ZPUCK_HEIGHT = 0.761
+
 # Print Tk errors to stdout. python.org/sf/639266
 import Tkinter
 OldTk = Tkinter.Tk
@@ -2451,6 +2454,77 @@ class TclCommands(nf_pbx.TclCommands):
 		s.poll()
 		o.tkRedraw()
 		reload_file(False)
+
+	# AMH
+	def custom_touch(event=None, offset_axis='x', new_value=0.0):
+		global system
+		if not manual_ok(): return
+		if joints_mode(): return
+		new_axis_value = new_value
+
+		vars.touch_off_system.set(system)
+		ensure_mode(linuxcnc.MODE_MDI)
+		s.poll()
+
+		linear_axis = offset_axis in "xyzuvw"
+		if linear_axis and vars.metric.get(): scale = 1/25.4
+		else: scale = 1
+
+		if linear_axis and 210 in s.gcodes:
+			scale *= 25.4
+
+		if system.split()[0] == "T":
+			lnum = 10 + vars.tto_g11.get()
+			offset_command = "G10 L%d P%d %c[%s*%.12f]" % (lnum, s.tool_in_spindle, offset_axis, new_axis_value, scale)
+			c.mdi(offset_command)
+			c.wait_complete()
+			c.mdi("G43")
+			c.wait_complete()
+		else:
+			offset_command = "G10 L20 %s %c[%s*%.12f]" % (system.split()[0], offset_axis, new_axis_value, scale)
+			c.mdi(offset_command)
+			c.wait_complete()
+
+		ensure_mode(linuxcnc.MODE_MANUAL)
+		s.poll()
+		o.tkRedraw()
+		reload_file(False)
+
+	def xytouch(event=None):
+		custom_touch(offset_axis='x')
+		custom_touch(offset_axis='y')
+
+	def ztouch(event=None):
+		custom_touch(offset_axis='z', new_value=height)
+
+	def ztouch_puck(event=None):
+		custom_touch(offset_axis='z', new_value=ZPUCK_HEIGHT)
+
+	def custom_rapid(event=None, axis='X', new_value=0.0):
+		global system
+		if not manual_ok(): return
+
+		ensure_mode(linuxcnc.MODE_MDI)
+		s.poll()
+
+		offset_command = "G0 %s%s" % (axis.upper(), new_value)
+		c.mdi(offset_command)
+		c.wait_complete()
+
+		ensure_mode(linuxcnc.MODE_MANUAL)
+		s.poll()
+		o.tkRedraw()
+
+	def zero_x(event=None):
+		custom_rapid(axis='X', new_value=0.0)
+
+	def zero_y(event=None):
+		custom_rapid(axis='Y', new_value=0.0)
+
+	def zero_z(event=None):
+		custom_rapid(axis='Z', new_value=0.0)
+
+	# END AMH
 
 	def set_axis_offset(event=None):
 		commands.touch_off(new_axis_value=0.)
