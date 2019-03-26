@@ -1,7 +1,7 @@
 ; MeshCAM config
 ; This config is the EMC2 machine controller
 ;
-; 2/29/04 	Changed comments to be enclosed by () rather than start with ; 
+; 2/29/04 	Changed comments to be enclosed by () rather than start with ;
 ;		Added CutViewer config output
 ; 5/13/04 	Added toolchange gcode
 ; 3/17/05	Changed stock definition to use CUTVIEWERSTOCK variable
@@ -38,10 +38,14 @@ START = "(FILENAME: [FILENAME])"
 ;;the following sets the stock for CutViewer
 START = "([CUTVIEWERSTOCK])"
 START = "G64 P0.001"
+START = "G90 G94 G17 G91.1"
+START = "G20"
+START = "G54"
+START = "G53 G0 Z0."
 ;
 TOOLCHANGE = "([CUTVIEWERTOOL])"
-TOOLCHANGE = "M6 [T]"
-TOOLCHANGE = "M3 [S]"
+;TOOLCHANGE = "M6 [T]"
+TOOLCHANGE = "[S] M3"
 ;
 RAPID_RATE_MOVE        = "G0[X][Y][Z]"
 ;
