@@ -1,0 +1,60 @@
+; MeshCAM config
+; This config is the EMC2 machine controller
+;
+; 2/29/04 	Changed comments to be enclosed by () rather than start with ; 
+;		Added CutViewer config output
+; 5/13/04 	Added toolchange gcode
+; 3/17/05	Changed stock definition to use CUTVIEWERSTOCK variable
+; 3/22/05	Added UNITS statement
+; 8/02/05 Removed [F] statement from rapid moves
+; 1/21/07 Added 4 axis support
+; 2/16/07 Added G64 in start
+; 2/11/09 Changed to Mach 3
+; 10/13/09 Enabled spindle start/stop and spindle speed
+; 01/31/11 Copied from Mach3 to EMC2-Inch
+; 02/22/2011 Added P parameter to G64
+; 03/02/2012 Changed final line from % to M02
+; 11/20/2013 Added % back to bottom
+;
+DESCRIPTION = "EMC2-Inch-3Axis(*.ngc)"
+FILE_EXTENSION = "ngc"
+UNITS=INCH
+;Feeds
+FORMAT = [F|#|F|1.1]
+;Moves
+FORMAT = [X|#|X|1.4]
+FORMAT = [Y|#|Y|1.4]
+FORMAT = [Z|#|Z|1.4]
+FORMAT = [I|#|I|1.4]
+FORMAT = [J|#|J|1.4]
+
+;
+;
+COMMENT_START = "("
+COMMENT_END = ")"
+;
+START = "%"
+START = "(FILENAME: [FILENAME])"
+;;the following sets the stock for CutViewer
+START = "([CUTVIEWERSTOCK])"
+START = "G64 P0.001"
+;
+TOOLCHANGE = "([CUTVIEWERTOOL])"
+TOOLCHANGE = "M6 [T]"
+TOOLCHANGE = "M3 [S]"
+;
+RAPID_RATE_MOVE        = "G0[X][Y][Z]"
+;
+FIRST_FEED_RATE_MOVE   = "G1[X][Y][Z][F]"
+FEED_RATE_MOVE         = "[X][Y][Z]"
+;
+FIRST_CW_ARC_MOVE = "G2[X][Y][I][J][F]"
+CW_ARC_MOVE = "G2[X][Y][I][J]"
+;
+FIRST_CCW_ARC_MOVE = "G3[X][Y][I][J][F]"
+CCW_ARC_MOVE = "G3[X][Y][I][J]"
+;
+END = "M5"
+END = "M02"
+END = "%"
+
